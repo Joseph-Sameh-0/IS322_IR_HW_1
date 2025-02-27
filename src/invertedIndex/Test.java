@@ -14,10 +14,10 @@ import java.io.InputStreamReader;
  */
 public class Test {
 
-    public static void main(String args[]) throws IOException {
+    public static void main(String[] args) throws IOException {
         Index5 index = new Index5();
         //|**  change it to your collection directory 
-        //|**  in windows "C:\\tmp11\\rl\\collection\\"       
+        //|**  in windows "C:\\tmp11\\rl\\collection\\"
         String files = "collection/";
 
         File file = new File(files);
