@@ -5,10 +5,9 @@
 package invertedIndex;
 
 /**
- *
  * @author ehab
  */
- 
+
 public class Posting {
 
     public Posting next = null;
@@ -17,9 +16,9 @@ public class Posting {
 
     Posting(int id, int t) {
         docId = id;
-        dtf=t;
+        dtf = t;
     }
-    
+
     Posting(int id) {
         docId = id;
     }

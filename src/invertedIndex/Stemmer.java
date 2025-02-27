@@ -5,7 +5,6 @@
 package invertedIndex;
 
 /**
- *
  * @author ehab
  */
 
@@ -19,7 +18,7 @@ import java.io.*;
  * by calling one of the various stem(something) methods.
  */
 
-public   class Stemmer {
+public class Stemmer {
     private char[] b;
     private int i,     /* offset into b */
             i_end, /* offset to end of stemmed word */
@@ -32,9 +31,11 @@ public   class Stemmer {
         i = 0;
         i_end = 0;
     }
-    public void addString(String s){
-         add(s.toCharArray(), s.length());
+
+    public void addString(String s) {
+        add(s.toCharArray(), s.length());
     }
+
     /**
      * Add a character to the word being stemmed.  When you are finished
      * adding characters, you can call stem(void) to stem the word.
@@ -90,7 +91,7 @@ public   class Stemmer {
         return b;
     }
 
-   /* cons(i) is true <=> b[i] is a consonant. */
+    /* cons(i) is true <=> b[i] is a consonant. */
 
     private final boolean cons(int i) {
         switch (b[i]) {
@@ -143,7 +144,7 @@ public   class Stemmer {
         }
     }
 
-   /* vowelinstem() is true <=> 0,...j contains a vowel */
+    /* vowelinstem() is true <=> 0,...j contains a vowel */
 
     private final boolean vowelinstem() {
         int i;
@@ -151,7 +152,7 @@ public   class Stemmer {
         return false;
     }
 
-   /* doublec(j) is true <=> j,(j-1) contain a double consonant. */
+    /* doublec(j) is true <=> j,(j-1) contain a double consonant. */
 
     private final boolean doublec(int j) {
         if (j < 1) return false;
@@ -195,7 +196,7 @@ public   class Stemmer {
     }
 
 
-   /* r(s) is used further down. */
+    /* r(s) is used further down. */
 
     private final void r(String s) {
         if (m() > 0) setto(s);
@@ -241,7 +242,7 @@ public   class Stemmer {
         }
     }
 
-   /* step2() turns terminal y to i when there is another vowel in the stem. */
+    /* step2() turns terminal y to i when there is another vowel in the stem. */
 
     private final void step2() {
         if (ends("y") && vowelinstem()) b[k] = 'i';
@@ -356,7 +357,7 @@ public   class Stemmer {
         }
     }
 
-   /* step4() deals with -ic-, -full, -ness etc. similar strategy to step3. */
+    /* step4() deals with -ic-, -full, -ness etc. similar strategy to step3. */
 
     private final void step4() {
         switch (b[k]) {
@@ -399,7 +400,7 @@ public   class Stemmer {
         }
     }
 
-   /* step5() takes off -ant, -ence etc., in context <c>vcvc<v>. */
+    /* step5() takes off -ant, -ence etc., in context <c>vcvc<v>. */
 
     private final void step5() {
         if (k == 0) return; /* for Bug 1 */
@@ -425,15 +426,15 @@ public   class Stemmer {
                 if (ends("ant")) break;
                 if (ends("ement")) break;
                 if (ends("ment")) break;
-                    /* element etc. not stripped before the m */
+                /* element etc. not stripped before the m */
                 if (ends("ent")) break;
                 return;
             case 'o':
                 if (ends("ion") && j >= 0 && (b[j] == 's' || b[j] == 't')) break;
-                                    /* j >= 0 fixes Bug 2 */
+                /* j >= 0 fixes Bug 2 */
                 if (ends("ou")) break;
                 return;
-                    /* takes care of -ous */
+            /* takes care of -ous */
             case 's':
                 if (ends("ism")) break;
                 return;
@@ -456,7 +457,7 @@ public   class Stemmer {
         if (m() > 1) k = j;
     }
 
-   /* step6() removes a final -e if m() > 1. */
+    /* step6() removes a final -e if m() > 1. */
 
     private final void step6() {
         j = k;
@@ -511,7 +512,7 @@ public   class Stemmer {
                                 if (j < 500) j++;
                                 ch = in.read();
                                 if (!Character.isLetter((char) ch)) {
-                                /* to test add(char ch) */
+                                    /* to test add(char ch) */
                                     for (int c = 0; c < j; c++) s.add(w[c]);
                                     /* or, to test add(char[] w, int j) */
                                     /* s.add(w, j); */

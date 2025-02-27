@@ -10,8 +10,10 @@ import java.io.FileWriter;
 import java.io.Writer;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import static java.lang.Math.log10;
 import static java.lang.Math.sqrt;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -19,7 +21,6 @@ import java.util.Map;
 import java.io.PrintWriter;
 
 /**
- *
  * @author ehab
  */
 public class Index5 {
@@ -48,7 +49,7 @@ public class Index5 {
         while (p != null) {
             /// -4- **** complete here ****
             // fix get rid of the last comma
-            System.out.print("" + p.docId + "," );
+            System.out.print("" + p.docId + ",");
             p = p.next;
         }
         System.out.println("]");
@@ -66,7 +67,7 @@ public class Index5 {
         System.out.println("------------------------------------------------------");
         System.out.println("*** Number of terms = " + index.size());
     }
- 
+
     //-----------------------------------------------
     public void buildIndex(String[] files) {  // from disk not from the internet
         int fid = 0;
@@ -96,7 +97,7 @@ public class Index5 {
         int flen = 0;
 
         String[] words = ln.split("\\W+");
-      //   String[] words = ln.replaceAll("(?:[^a-zA-Z0-9 -]|(?<=\\w)-(?!\\S))", " ").toLowerCase().split("\\s+");
+        //   String[] words = ln.replaceAll("(?:[^a-zA-Z0-9 -]|(?<=\\w)-(?!\\S))", " ").toLowerCase().split("\\s+");
         flen += words.length;
         for (String word : words) {
             word = word.toLowerCase();
@@ -133,7 +134,7 @@ public class Index5 {
         return flen;
     }
 
-//----------------------------------------------------------------------------  
+    //----------------------------------------------------------------------------
     boolean stopWord(String word) {
         if (word.equals("the") || word.equals("to") || word.equals("be") || word.equals("for") || word.equals("from") || word.equals("in")
                 || word.equals("a") || word.equals("into") || word.equals("by") || word.equals("or") || word.equals("and") || word.equals("that")) {
@@ -163,20 +164,20 @@ public class Index5 {
         Posting answer = null;
         Posting last = null;
 //      2 while p1  != NIL and p2  != NIL
-     
+
 //          3 do if docID ( p 1 ) = docID ( p2 )
- 
+
 //          4   then ADD ( answer, docID ( p1 ))
-                // answer.add(pL1.docId);
- 
+        // answer.add(pL1.docId);
+
 //          5       p1 ← next ( p1 )
 //          6       p2 ← next ( p2 )
- 
- //          7   else if docID ( p1 ) < docID ( p2 )
-            
+
+        //          7   else if docID ( p1 ) < docID ( p2 )
+
 //          8        then p1 ← next ( p1 )
 //          9        else p2 ← next ( p2 )
- 
+
 //      10 return answer
         return answer;
     }
@@ -185,7 +186,7 @@ public class Index5 {
         String result = "";
         String[] words = phrase.split("\\W+");
         int len = words.length;
-        
+
         //fix this if word is not in the hash table will crash...
         Posting posting = index.get(words[0].toLowerCase()).pList;
         int i = 1;
@@ -200,8 +201,8 @@ public class Index5 {
         }
         return result;
     }
-    
-    
+
+
     //---------------------------------
     String[] sort(String[] words) {  //bubble sort
         boolean sorted = false;
@@ -222,11 +223,11 @@ public class Index5 {
         return words;
     }
 
-     //---------------------------------
+    //---------------------------------
 
     public void store(String storageName) {
         try {
-            String pathToStorage = "/home/ehab/tmp11/rl/"+storageName;
+            String pathToStorage = "/home/ehab/tmp11/rl/" + storageName;
             Writer wr = new FileWriter(pathToStorage);
             for (Map.Entry<Integer, SourceRecord> entry : sources.entrySet()) {
                 System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue().URL + ", Value = " + entry.getValue().title + ", Value = " + entry.getValue().text);
@@ -261,31 +262,34 @@ public class Index5 {
             e.printStackTrace();
         }
     }
-//=========================================    
-    public boolean storageFileExists(String storageName){
-        java.io.File f = new java.io.File("/home/ehab/tmp11/rl/"+storageName);
+
+    //=========================================
+    public boolean storageFileExists(String storageName) {
+        java.io.File f = new java.io.File("/home/ehab/tmp11/rl/" + storageName);
         if (f.exists() && !f.isDirectory())
             return true;
         return false;
-            
+
     }
-//----------------------------------------------------    
+
+    //----------------------------------------------------
     public void createStore(String storageName) {
         try {
-            String pathToStorage = "/home/ehab/tmp11/"+storageName;
+            String pathToStorage = "/home/ehab/tmp11/" + storageName;
             Writer wr = new FileWriter(pathToStorage);
             wr.write("end" + "\n");
             wr.close();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-//----------------------------------------------------      
-     //load index from hard disk into memory
+
+    //----------------------------------------------------
+    //load index from hard disk into memory
     public HashMap<String, DictEntry> load(String storageName) {
         try {
-            String pathToStorage = "/home/ehab/tmp11/rl/"+storageName;         
+            String pathToStorage = "/home/ehab/tmp11/rl/" + storageName;
             sources = new HashMap<Integer, SourceRecord>();
             index = new HashMap<String, DictEntry>();
             BufferedReader file = new BufferedReader(new FileReader(pathToStorage));
