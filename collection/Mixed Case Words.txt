@@ -1,0 +1,2 @@
+This is an example of a mixed case word document.
+The index should handle words in all cases correctly to ensure uniformity in search results.

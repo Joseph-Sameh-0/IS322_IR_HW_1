@@ -1,0 +1,2 @@
+This is an example of a long text document containing multiple sentences.
+It tests the ability to handle large amounts of data efficiently during indexing and retrieval.

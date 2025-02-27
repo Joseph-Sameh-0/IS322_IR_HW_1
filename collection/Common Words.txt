@@ -1,0 +1,3 @@
+Common words like "and", "the", and "to" are included for testing the indexing process against common terms.
+
+You can continue adding more text files as needed, ensuring that they cover a range of scenarios including varied lengths of documents, complex grammar structures, punctuation marks, special characters, mixed case words, and common English vocabulary.

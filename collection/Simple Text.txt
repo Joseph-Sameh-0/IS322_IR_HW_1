@@ -1,0 +1,2 @@
+This is an example of a simple text document.
+It contains words that need to be indexed correctly.
