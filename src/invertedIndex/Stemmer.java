@@ -499,56 +499,56 @@ public class Stemmer {
      * Usage: Stemmer file-name ...
      */
     public static void main(String[] args) {
-        char[] w = new char[501];
-        Stemmer s = new Stemmer();
-        if (Arrays.equals(args, new String[]{})){
-            args =  new String[]{"collection/Common Words.txt"};
-        }
-
-        for (String arg : args) {
-            try {
-                FileInputStream in = new FileInputStream(arg);
-                try {
-                    while (true) {
-                        int ch = in.read();
-                        char cc = (char) ch;
-                        if (Character.isLetter((char) ch)) {
-                            int j = 0;
-                            while (true) {
-                                ch = Character.toLowerCase((char) ch);
-                                w[j] = (char) ch;
-                                if (j < 500) j++;
-                                ch = in.read();
-                                if (!Character.isLetter((char) ch)) {
-
-                                    /* to test add(char ch) */
-                                    for (int c = 0; c < j; c++) s.add(w[c]);
-                                    /* or, to test add(char[] w, int j) */
-                                    /* s.add(w, j); */
-                                    s.stem();
-                                    {
-                                        String u;
-                                        /* and now, to test toString() : */
-                                        u = s.toString();
-                                        /* to test getResultBuffer(), getResultLength() : */
-                                        /* u = new String(s.getResultBuffer(), 0, s.getResultLength()); */
-                                        System.out.print(u);
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-                        if (ch < 0) break;
-                        System.out.print((char) ch);
-                    }
-                } catch (IOException e) {
-                    System.out.println("error reading " + arg);
-                    break;
-                }
-            } catch (FileNotFoundException e) {
-                System.out.println("file " + arg + " not found");
-                break;
-            }
-        }
+//        char[] w = new char[501];
+//        Stemmer s = new Stemmer();
+//        if (Arrays.equals(args, new String[]{})){
+//            args =  new String[]{"collection/Common Words.txt"};
+//        }
+//
+//        for (String arg : args) {
+//            try {
+//                FileInputStream in = new FileInputStream(arg);
+//                try {
+//                    while (true) {
+//                        int ch = in.read();
+//                        char cc = (char) ch;
+//                        if (Character.isLetter((char) ch)) {
+//                            int j = 0;
+//                            while (true) {
+//                                ch = Character.toLowerCase((char) ch);
+//                                w[j] = (char) ch;
+//                                if (j < 500) j++;
+//                                ch = in.read();
+//                                if (!Character.isLetter((char) ch)) {
+//
+//                                    /* to test add(char ch) */
+//                                    for (int c = 0; c < j; c++) s.add(w[c]);
+//                                    /* or, to test add(char[] w, int j) */
+//                                    /* s.add(w, j); */
+//                                    s.stem();
+//                                    {
+//                                        String u;
+//                                        /* and now, to test toString() : */
+//                                        u = s.toString();
+//                                        /* to test getResultBuffer(), getResultLength() : */
+//                                        /* u = new String(s.getResultBuffer(), 0, s.getResultLength()); */
+//                                        System.out.print(u);
+//                                    }
+//                                    break;
+//                                }
+//                            }
+//                        }
+//                        if (ch < 0) break;
+//                        System.out.print((char) ch);
+//                    }
+//                } catch (IOException e) {
+//                    System.out.println("error reading " + arg);
+//                    break;
+//                }
+//            } catch (FileNotFoundException e) {
+//                System.out.println("file " + arg + " not found");
+//                break;
+//            }
+//        }
     }
 }
