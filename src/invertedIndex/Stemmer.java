@@ -9,6 +9,9 @@ package invertedIndex;
  */
 
 import java.io.*;
+import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Stemmer, implementing the Porter Stemming Algorithm
@@ -20,7 +23,7 @@ import java.io.*;
 
 public class Stemmer {
     private char[] b;
-    private int i,     /* offset into b */
+    private int i, /* offset into b */
             i_end, /* offset to end of stemmed word */
             j, k;
     private static final int INC = 50;
@@ -490,20 +493,25 @@ public class Stemmer {
 
     /**
      * Test program for demonstrating the Stemmer.  It reads text from a
-     * a list of files, stems each word, and writes the result to standard
+     * list of files, stems each word, and writes the result to standard
      * output. Note that the word stemmed is expected to be in lower case:
      * forcing lower case must be done outside the Stemmer class.
-     * Usage: Stemmer file-name file-name ...
+     * Usage: Stemmer file-name ...
      */
     public static void main(String[] args) {
         char[] w = new char[501];
         Stemmer s = new Stemmer();
-        for (int i = 0; i < args.length; i++)
+        if (Arrays.equals(args, new String[]{})){
+            args =  new String[]{"collection/Common Words.txt"};
+        }
+
+        for (String arg : args) {
             try {
-                FileInputStream in = new FileInputStream(args[i]);
+                FileInputStream in = new FileInputStream(arg);
                 try {
                     while (true) {
                         int ch = in.read();
+                        char cc = (char) ch;
                         if (Character.isLetter((char) ch)) {
                             int j = 0;
                             while (true) {
@@ -512,6 +520,7 @@ public class Stemmer {
                                 if (j < 500) j++;
                                 ch = in.read();
                                 if (!Character.isLetter((char) ch)) {
+
                                     /* to test add(char ch) */
                                     for (int c = 0; c < j; c++) s.add(w[c]);
                                     /* or, to test add(char[] w, int j) */
@@ -533,12 +542,13 @@ public class Stemmer {
                         System.out.print((char) ch);
                     }
                 } catch (IOException e) {
-                    System.out.println("error reading " + args[i]);
+                    System.out.println("error reading " + arg);
                     break;
                 }
             } catch (FileNotFoundException e) {
-                System.out.println("file " + args[i] + " not found");
+                System.out.println("file " + arg + " not found");
                 break;
             }
+        }
     }
 }
