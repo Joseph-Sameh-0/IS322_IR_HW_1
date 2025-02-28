@@ -69,18 +69,18 @@ public class Index5 {
     }
 
     //-----------------------------------------------
+     //Reads a set of files, processes the content line by line,calls indexOneLine fun to process the line
     public void buildIndex(String[] files) {  // from disk not from the internet
-        int fid = 0;
+        int fid = 0;                   // file id 0 --> first file
         for (String fileName : files) {
             try (BufferedReader file = new BufferedReader(new FileReader(fileName))) {
-                if (!sources.containsKey(fileName)) {
-                    sources.put(fid, new SourceRecord(fid, fileName, fileName, "notext"));
+                if (!sources.containsKey(fileName)) {  // add the file to the source if it does not exist
+                    sources.put(fid, new SourceRecord(fid, fileName, fileName, "notext")); // EX: id  url  title  txt
                 }
                 String ln;
-                int flen = 0;
+                int flen = 0;   // call the function on each line to process it 
                 while ((ln = file.readLine()) != null) {
-                    /// -2- **** complete here ****
-                    ///**** hint   flen +=  ________________(ln, fid);
+                    flen+= indexOneLine(ln,fid);
                 }
                 sources.get(fid).length = flen;
 
