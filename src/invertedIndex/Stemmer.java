@@ -550,5 +550,25 @@ public class Stemmer {
 //                break;
 //            }
 //        }
+
+        Stemmer s = new Stemmer();
+
+        String fileName = "collection/Common Words.txt";
+        try (BufferedReader file = new BufferedReader(new FileReader(fileName))) {
+            String ln;
+            while ((ln = file.readLine()) != null) {
+                Pattern p = Pattern.compile("[a-z]+", Pattern.CASE_INSENSITIVE); // matches one or more non-alphabetic characters (\\W)
+                Matcher m = p.matcher(ln.toLowerCase());
+                while (m.find()) {
+//                    System.out.println(m.group()); // prints the matched word
+                    s.addString(m.group());
+                    s.stem();
+                    System.out.println(s.toString());
+
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("File " + fileName + " not found. Skip it");
+        }
     }
 }
