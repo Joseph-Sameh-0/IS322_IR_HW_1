@@ -21,21 +21,21 @@ public class SourceRecord {
         return URL;
     }
 
-    public SourceRecord(int f, String u, String tt, int ln, Double n, String tx) {
-        fid = f;
-        URL = u;
-        title = tt;
-        text = tx;
-        norm = n;
-        length = ln;
+    public SourceRecord(int fid, String URL, String title, int length, Double norm, String text) {
+        this.fid = fid;
+        this.URL = URL;
+        this.title = title;
+        this.text = text;
+        this.norm = norm;
+        this.length = length;
     }
 
-    public SourceRecord(int f, String u, String tt, String tx) {
-        fid = f;
-        URL = u;
-        title = tt;
-        text = tx;
-        norm = 0.0;
-        length = 0;
+    public SourceRecord(int fid, String URL, String title, String text) {
+        this.fid = fid;
+        this.URL = URL;
+        this.title = title;
+        this.text = text;
+        this.norm = 0.0;
+        this.length = 0;
     }
 }
