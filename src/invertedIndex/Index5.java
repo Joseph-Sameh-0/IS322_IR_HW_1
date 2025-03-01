@@ -23,12 +23,12 @@ public class Index5 {
     int N = 0;
     public Map<Integer, SourceRecord> sources;  // store the doc_id and the file name.
 
-    public HashMap<String, DictEntry> index; // THe inverted index
+    public HashMap<String, PostingDict> index; // THe inverted index
     //--------------------------------------------
 
     public Index5() {
         sources = new HashMap<Integer, SourceRecord>();
-        index = new HashMap<String, DictEntry>();
+        index = new HashMap<String, PostingDict>();
     }
 
     public void setN(int n) {
@@ -52,10 +52,10 @@ public class Index5 {
 
     //---------------------------------------------
     public void printDictionary() {
-        Iterator<Map.Entry<String, DictEntry>> idxIt = index.entrySet().iterator();
+        Iterator<Map.Entry<String, PostingDict>> idxIt = index.entrySet().iterator();
         while (idxIt.hasNext()) {
-            Map.Entry<String, DictEntry> IdxPair = idxIt.next();
-            DictEntry postingDict = IdxPair.getValue();
+            Map.Entry<String, PostingDict> IdxPair = idxIt.next();
+            PostingDict postingDict = IdxPair.getValue();
 //            System.out.print("** [" + IdxPair.getKey() + "," + postingDict.doc_freq + "]       =--> ");
             System.out.printf("** %-15s %-5d =--> ", IdxPair.getKey(), postingDict.doc_freq);
             printPostingList(postingDict.pList);
@@ -104,7 +104,7 @@ public class Index5 {
             // check to see if the word is not in the dictionary
             // if not add it
             if (!index.containsKey(word)) {
-                index.put(word, new DictEntry());
+                index.put(word, new PostingDict());
             }
             // add document id to the posting list
             if (!index.get(word).postingListContains(fid)) {
@@ -236,7 +236,7 @@ public class Index5 {
             Iterator it = index.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
-                DictEntry dd = (DictEntry) pair.getValue();
+                PostingDict dd = (PostingDict) pair.getValue();
                 //  System.out.print("** [" + pair.getKey() + "," + dd.doc_freq + "] <" + dd.term_freq + "> =--> ");
                 wr.write(pair.getKey().toString() + "," + dd.doc_freq + "," + dd.term_freq + ";");
                 Posting p = dd.pList;
@@ -280,11 +280,11 @@ public class Index5 {
 
     //----------------------------------------------------
     //load index from hard disk into memory
-    public HashMap<String, DictEntry> load(String storageName) {
+    public HashMap<String, PostingDict> load(String storageName) {
         try {
             String pathToStorage = "/home/ehab/tmp11/rl/" + storageName;
             sources = new HashMap<Integer, SourceRecord>();
-            index = new HashMap<String, DictEntry>();
+            index = new HashMap<String, PostingDict>();
             BufferedReader file = new BufferedReader(new FileReader(pathToStorage));
             String ln = "";
             int flen = 0;
@@ -314,7 +314,7 @@ public class Index5 {
                 String[] ss1 = ln.split(";");
                 String[] ss1a = ss1[0].split(",");
                 String[] ss1b = ss1[1].split(":");
-                index.put(ss1a[0], new DictEntry(Integer.parseInt(ss1a[1]), Integer.parseInt(ss1a[2])));
+                index.put(ss1a[0], new PostingDict(Integer.parseInt(ss1a[1]), Integer.parseInt(ss1a[2])));
                 String[] ss1bx;   //posting
                 for (int i = 0; i < ss1b.length; i++) {
                     ss1bx = ss1b[i].split(",");

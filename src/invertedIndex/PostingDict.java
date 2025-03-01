@@ -7,7 +7,7 @@ package invertedIndex;
 /**
  * @author ehab
  */
-public class DictEntry {
+public class PostingDict {
 
     public int doc_freq = 0; // number of documents that contain the term
     public int term_freq = 0; //number of times the term is mentioned in the collection
@@ -59,11 +59,11 @@ public class DictEntry {
     }
 // implement insert (int docId) method
 
-    DictEntry() {
+    PostingDict() {
         //  postingList = new HashSet<Integer>();
     }
 
-    DictEntry(int df, int tf) {
+    PostingDict(int df, int tf) {
         doc_freq = df;
         term_freq = tf;
     }
