@@ -44,12 +44,13 @@ public class Index5 {
 
     //---------------------------------------------
     public void printPostingList(Posting p) {
-        // Iterator<Integer> it2 = hset.iterator();
         System.out.print("[");
         while (p != null) {
-            /// -4- **** complete here ****
-            // fix get rid of the last comma
-            System.out.print("" + p.docId + ",");
+            if (p.next != null) {
+                System.out.print(p.docId + ",");
+            } else {
+                System.out.print(p.docId);
+            }
             p = p.next;
         }
         System.out.println("]");
