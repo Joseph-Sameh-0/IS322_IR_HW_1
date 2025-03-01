@@ -106,23 +106,24 @@ public class Index5 {
                 index.put(word, new PostingDict());
             }
             // add document id to the posting list
-            if (!index.get(word).postingListContains(fileId)) {
-                index.get(word).doc_freq += 1; //set doc freq to the number of doc that contain the term 
-                if (index.get(word).pList == null) {
-                    index.get(word).pList = new Posting(fileId);
-                    index.get(word).last = index.get(word).pList;
+            PostingDict wordPostingDict = index.get(word);
+            if (!wordPostingDict.postingListContains(fileId)) {
+                wordPostingDict.doc_freq += 1; //set doc freq to the number of doc that contain the term
+                if (wordPostingDict.pList == null) {
+                    wordPostingDict.pList = new Posting(fileId);
+                    wordPostingDict.last = wordPostingDict.pList;
                 } else {
-                    index.get(word).last.next = new Posting(fileId);
-                    index.get(word).last = index.get(word).last.next;
+                    wordPostingDict.last.next = new Posting(fileId);
+                    wordPostingDict.last = wordPostingDict.last.next;
                 }
             } else {
-                index.get(word).last.dtf += 1;
+                wordPostingDict.last.dtf += 1;
             }
             //set the term_fteq in the collection
-            index.get(word).term_freq += 1;
+            wordPostingDict.term_freq += 1;
             if (word.equalsIgnoreCase("lattice")) {
 
-                System.out.println("  <<" + index.get(word).getPosting(1) + ">> " + line);
+                System.out.println("  <<" + wordPostingDict.getPosting(1) + ">> " + line);
             }
 
         }
