@@ -62,7 +62,8 @@ public class Index5 {
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
             DictEntry dd = (DictEntry) pair.getValue();
-            System.out.print("** [" + pair.getKey() + "," + dd.doc_freq + "]       =--> ");
+//            System.out.print("** [" + pair.getKey() + "," + dd.doc_freq + "]       =--> ");
+            System.out.printf("%-15s %-5d =--> ", pair.getKey(), dd.doc_freq);
             printPostingList(dd.pList);
         }
         System.out.println("------------------------------------------------------");
@@ -70,7 +71,7 @@ public class Index5 {
     }
 
     //-----------------------------------------------
-     //Reads a set of files, processes the content line by line,calls indexOneLine fun to process the line
+    //Reads a set of files, processes the content line by line,calls indexOneLine fun to process the line
     public void buildIndex(String[] files) {  // from disk not from the internet
         int fid = 0;                   // file id 0 --> first file
         for (String fileName : files) {
@@ -81,7 +82,7 @@ public class Index5 {
                 String ln;
                 int flen = 0;   // call the function on each line to process it 
                 while ((ln = file.readLine()) != null) {
-                    flen+= indexOneLine(ln,fid);
+                    flen += indexOneLine(ln, fid);
                 }
                 sources.get(fid).length = flen;
 
@@ -149,7 +150,8 @@ public class Index5 {
     }
 //----------------------------------------------------------------------------  
 
-    String stemWord(String word) { //skip for now
+    String stemWord(String word) {
+        //skip for now
         return word;
 //        Stemmer s = new Stemmer();
 //        s.addString(word);
