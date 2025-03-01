@@ -9,16 +9,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.Writer;
 import java.io.IOException;
-import java.io.InputStreamReader;
-
-import static java.lang.Math.log10;
-import static java.lang.Math.sqrt;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
-import java.io.PrintWriter;
 
 /**
  * @author ehab
@@ -58,13 +52,13 @@ public class Index5 {
 
     //---------------------------------------------
     public void printDictionary() {
-        Iterator it = index.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
-            DictEntry dd = (DictEntry) pair.getValue();
-//            System.out.print("** [" + pair.getKey() + "," + dd.doc_freq + "]       =--> ");
-            System.out.printf("%-15s %-5d =--> ", pair.getKey(), dd.doc_freq);
-            printPostingList(dd.pList);
+        Iterator<Map.Entry<String, DictEntry>> idxIt = index.entrySet().iterator();
+        while (idxIt.hasNext()) {
+            Map.Entry<String, DictEntry> IdxPair = idxIt.next();
+            DictEntry postingDict = IdxPair.getValue();
+//            System.out.print("** [" + IdxPair.getKey() + "," + postingDict.doc_freq + "]       =--> ");
+            System.out.printf("** %-15s %-5d =--> ", IdxPair.getKey(), postingDict.doc_freq);
+            printPostingList(postingDict.pList);
         }
         System.out.println("------------------------------------------------------");
         System.out.println("*** Number of terms = " + index.size());
