@@ -142,11 +142,7 @@ public class Index5 {
                 || word.equals("a") || word.equals("into") || word.equals("by") || word.equals("or") || word.equals("and") || word.equals("that")) {
             return true;
         }
-        if (word.length() < 2) {
-            return true;
-        }
-        return false;
-
+        return word.length() < 2;
     }
 //----------------------------------------------------------------------------  
 
