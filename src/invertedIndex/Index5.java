@@ -67,34 +67,33 @@ public class Index5 {
     //-----------------------------------------------
     //Reads a set of files, processes the content line by line,calls indexOneLine fun to process the line
     public void buildIndex(String[] files) {  // from disk not from the internet
-        int fid = 0;                   // file id 0 --> first file
+        int fileId = 0;                   // file id 0 --> first file
         for (String fileName : files) {
             try (BufferedReader file = new BufferedReader(new FileReader(fileName))) {
                 if (!sources.containsKey(fileName)) {  // add the file to the source if it does not exist
-                    sources.put(fid, new SourceRecord(fid, fileName, fileName, "notext")); // EX: id  url  title  txt
+                    sources.put(fileId, new SourceRecord(fileId, fileName, fileName, "notext")); // EX: id  url  title  txt
                 }
-                String ln;
-                int flen = 0;   // call the function on each line to process it 
-                while ((ln = file.readLine()) != null) {
-                    flen += indexOneLine(ln, fid);
+                String line;
+                int processedWords = 0;   // call the function on each line to process it
+                while ((line = file.readLine()) != null) {
+                    processedWords += indexOneLine(line, fileId);
                 }
-                sources.get(fid).length = flen;
-
+                sources.get(fileId).length = processedWords;
             } catch (IOException e) {
                 System.out.println("File " + fileName + " not found. Skip it");
             }
-            fid++;
+            fileId++;
         }
         //   printDictionary();
     }
 
     //----------------------------------------------------------------------------  
     public int indexOneLine(String ln, int fid) {
-        int flen = 0;
+        int processedWordsInLine = 0;
 
         String[] words = ln.split("\\W+");
         //   String[] words = ln.replaceAll("(?:[^a-zA-Z0-9 -]|(?<=\\w)-(?!\\S))", " ").toLowerCase().split("\\s+");
-        flen += words.length;
+        processedWordsInLine += words.length;
         for (String word : words) {
             word = word.toLowerCase();
             if (stopWord(word)) {
@@ -127,7 +126,7 @@ public class Index5 {
             }
 
         }
-        return flen;
+        return processedWordsInLine;
     }
 
     //----------------------------------------------------------------------------
