@@ -88,11 +88,11 @@ public class Index5 {
     }
 
     //----------------------------------------------------------------------------  
-    public int indexOneLine(String ln, int fid) {
+    public int indexOneLine(String line, int fileId) {
         int processedWordsInLine = 0;
 
-        String[] words = ln.split("\\W+");
-        //   String[] words = ln.replaceAll("(?:[^a-zA-Z0-9 -]|(?<=\\w)-(?!\\S))", " ").toLowerCase().split("\\s+");
+        String[] words = line.split("\\W+");
+        //   String[] words = line.replaceAll("(?:[^a-zA-Z0-9 -]|(?<=\\w)-(?!\\S))", " ").toLowerCase().split("\\s+");
         processedWordsInLine += words.length;
         for (String word : words) {
             word = word.toLowerCase();
@@ -106,13 +106,13 @@ public class Index5 {
                 index.put(word, new PostingDict());
             }
             // add document id to the posting list
-            if (!index.get(word).postingListContains(fid)) {
+            if (!index.get(word).postingListContains(fileId)) {
                 index.get(word).doc_freq += 1; //set doc freq to the number of doc that contain the term 
                 if (index.get(word).pList == null) {
-                    index.get(word).pList = new Posting(fid);
+                    index.get(word).pList = new Posting(fileId);
                     index.get(word).last = index.get(word).pList;
                 } else {
-                    index.get(word).last.next = new Posting(fid);
+                    index.get(word).last.next = new Posting(fileId);
                     index.get(word).last = index.get(word).last.next;
                 }
             } else {
@@ -122,7 +122,7 @@ public class Index5 {
             index.get(word).term_freq += 1;
             if (word.equalsIgnoreCase("lattice")) {
 
-                System.out.println("  <<" + index.get(word).getPosting(1) + ">> " + ln);
+                System.out.println("  <<" + index.get(word).getPosting(1) + ">> " + line);
             }
 
         }
