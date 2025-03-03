@@ -168,15 +168,6 @@ public class Index5 {
                     last=newNode;
                 }
 
-//          5       p1 ← next ( p1 )
-//          6       p2 ← next ( p2 )
-
-        //          7   else if docID ( p1 ) < docID ( p2 )
-
-//          8        then p1 ← next ( p1 )
-//          9        else p2 ← next ( p2 )
-
-//      10 return answer
         return answer;
     }
 
