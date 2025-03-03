@@ -151,9 +151,6 @@ public class Index5 {
 
     //----------------------------------------------------------------------------  
     Posting intersect(Posting pL1, Posting pL2) {
-///****  -1-   complete after each comment ****
-//   INTERSECT ( p1 , p2 )
-//          1  answer ←      {}
         Posting answer = null;
         Posting last = null;
 //      2 while p1  != NIL and p2  != NIL
