@@ -157,17 +157,27 @@ public class Index5 {
         {
             if(pL1.docId==pL2.docId)
             {
-                Posting newNode = new Posting(pL1.docId) ;
-                if(answer==null)
-                {
-                    answer=newNode;
-                    last=answer;
-                }
-                else{
-                    last.next=newNode;
-                    last=newNode;
-                }
+                    Posting newNode = new Posting(pL1.docId) ;
+                    if(answer==null)
+                    {
+                        answer=newNode;
+                        last=answer;
+                    }
+                    else{
+                        last.next=newNode;
+                        last=newNode;
+                     }
+              pL1=pL1.next;
+              pL2=pL2.next;
+            }
+            else if(pL1.docId<pL2.docId){    
 
+                 pL1=pL1.next;
+            } 
+            else{
+                pL2=pL2.next;
+            }
+        }
         return answer;
     }
 
