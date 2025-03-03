@@ -151,14 +151,22 @@ public class Index5 {
 
     //----------------------------------------------------------------------------  
     Posting intersect(Posting pL1, Posting pL2) {
-        Posting answer = null;
+ Posting answer = null;
         Posting last = null;
-//      2 while p1  != NIL and p2  != NIL
-
-//          3 do if docID ( p 1 ) = docID ( p2 )
-
-//          4   then ADD ( answer, docID ( p1 ))
-        // answer.add(pL1.docId);
+        while(pL1!=null && pL2!=null )
+        {
+            if(pL1.docId==pL2.docId)
+            {
+                Posting newNode = new Posting(pL1.docId) ;
+                if(answer==null)
+                {
+                    answer=newNode;
+                    last=answer;
+                }
+                else{
+                    last.next=newNode;
+                    last=newNode;
+                }
 
 //          5       p1 ← next ( p1 )
 //          6       p2 ← next ( p2 )
