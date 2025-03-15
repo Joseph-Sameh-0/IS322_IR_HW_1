@@ -27,7 +27,7 @@ This project implements an **inverted index** in Java, which is a data structure
 ## **How It Works**
 
 1. **Building the Index:**
-   - The program reads multiple text files from a directory.
+   - The program reads multiple text files from a directory (Collection).
    - It tokenizes the words and maps each unique word to the document(s) where it appears.
    - The index is then serialized and stored for future use.
 
