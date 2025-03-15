@@ -142,9 +142,10 @@ public class Index5 {
     // Check if the word is in the list of common stop words (the,to,be,for,from,in,a,into,by,or,and,that)
         if (word.equals("the") || word.equals("to") || word.equals("be") || word.equals("for") || word.equals("from") || word.equals("in")
                 || word.equals("a") || word.equals("into") || word.equals("by") || word.equals("or") || word.equals("and") || word.equals("that")) {
-            return true;
+            return true; // Return true if it is a stop word
         }
-        return word.length() < 2;
+         // If the word has less than 2 characters, consider it a stop word
+        return word.length() < 2; // returns true for very short words
     }
 //----------------------------------------------------------------------------  
 
