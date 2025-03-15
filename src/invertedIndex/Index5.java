@@ -51,17 +51,18 @@ public class Index5 {
     }
 
     //-------------------------------------------------------------------
+    // Prints the dictionary of the inverted index.
     public void printDictionary() {
-        Iterator<Map.Entry<String, PostingDict>> idxIt = index.entrySet().iterator();
+        Iterator<Map.Entry<String, PostingDict>> idxIt = index.entrySet().iterator();  // Iterator to traverse through the entries of the 'index' map.
         while (idxIt.hasNext()) {
-            Map.Entry<String, PostingDict> IdxPair = idxIt.next();
-            PostingDict postingDict = IdxPair.getValue();
-//            System.out.print("** [" + IdxPair.getKey() + "," + postingDict.doc_freq + "]       =--> ");
+            Map.Entry<String, PostingDict> IdxPair = idxIt.next();                     // Get the next key-value pair from the map
+            PostingDict postingDict = IdxPair.getValue();                              // Extract the PostingDict object (value) from the key-value pair.
+            System.out.print("** [" + IdxPair.getKey() + "," + postingDict.doc_freq + "]       =--> ");   // Print the term (key) and its document frequency in a formatted way.
             System.out.printf("** %-15s %-5d =--> ", IdxPair.getKey(), postingDict.doc_freq);
-            printPostingList(postingDict.pList);
+            printPostingList(postingDict.pList);                                       // Call a function to print the posting list of the current term.
         }
         System.out.println("------------------------------------------------------");
-        System.out.println("*** Number of terms = " + index.size());
+        System.out.println("*** Number of terms = " + index.size());                    // Print the total number of terms in the dictionary.
     }
 
     //------------------------------------------------------------------------------------
