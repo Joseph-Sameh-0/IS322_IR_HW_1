@@ -37,6 +37,7 @@ public class Index5 {
 
 
     //---------------------------------------------
+    // Prints the posting list in a formatted way
     public void printPostingList(Posting p) {
         System.out.print("[");
         while (p != null) {
