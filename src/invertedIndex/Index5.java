@@ -67,7 +67,7 @@ public class Index5 {
     //-----------------------------------------------
     //Reads a set of files, processes the content line by line,calls indexOneLine fun to process the line
     public void buildIndex(String[] files) {  // from disk not from the internet
-        int fileId = 0;                   //  Unique ID for each file (starting from 0)
+        int fileId = 0;                     //  Unique ID for each file (starting from 0)
         // Loop through each file name in the list
         for (String fileName : files) {
             try (BufferedReader file = new BufferedReader(new FileReader(fileName))) {
@@ -85,7 +85,7 @@ public class Index5 {
             } catch (IOException e) {
                 System.out.println("File " + fileName + " not found. Skip it");
             }
-            fileId++;
+            fileId++;    // move to the next file ID
         }
         //   printDictionary();
     }
