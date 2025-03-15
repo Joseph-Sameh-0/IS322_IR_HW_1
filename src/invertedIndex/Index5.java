@@ -67,17 +67,20 @@ public class Index5 {
     //-----------------------------------------------
     //Reads a set of files, processes the content line by line,calls indexOneLine fun to process the line
     public void buildIndex(String[] files) {  // from disk not from the internet
-        int fileId = 0;                   // file id 0 --> first file
+        int fileId = 0;                   //  Unique ID for each file (starting from 0)
+        // Loop through each file name in the list
         for (String fileName : files) {
             try (BufferedReader file = new BufferedReader(new FileReader(fileName))) {
                 if (!sources.containsKey(fileName)) {  // add the file to the source if it does not exist
                     sources.put(fileId, new SourceRecord(fileId, fileName, fileName, "notext")); // EX: id  url  title  txt
                 }
                 String line;
-                int processedWords = 0;   // call the function on each line to process it
+                int processedWords = 0;  // Counter for processed words in the file
+               
                 while ((line = file.readLine()) != null) {
-                    processedWords += indexOneLine(line, fileId);
+                    processedWords += indexOneLine(line, fileId);  // call the function on each line to process it
                 }
+                 // Store the number of words processed for this file
                 sources.get(fileId).length = processedWords;
             } catch (IOException e) {
                 System.out.println("File " + fileName + " not found. Skip it");
