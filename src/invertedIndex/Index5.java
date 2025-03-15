@@ -36,7 +36,7 @@ public class Index5 {
     }
 
 
-    //---------------------------------------------
+    //-----------------------------------------------------------------
     // Prints the posting list in a formatted way
     public void printPostingList(Posting p) {
         System.out.print("[");
@@ -51,7 +51,7 @@ public class Index5 {
         System.out.println("]");
     }
 
-    //---------------------------------------------
+    //-------------------------------------------------------------------
     public void printDictionary() {
         Iterator<Map.Entry<String, PostingDict>> idxIt = index.entrySet().iterator();
         while (idxIt.hasNext()) {
@@ -65,7 +65,7 @@ public class Index5 {
         System.out.println("*** Number of terms = " + index.size());
     }
 
-    //-----------------------------------------------
+    //------------------------------------------------------------------------------------
     //Reads a set of files, processes the content line by line,calls indexOneLine function to process the line
     public void buildIndex(String[] files) {  // from disk not from the internet
         int fileId = 0;                     //  Unique ID for each file (starting from 0)
@@ -91,7 +91,7 @@ public class Index5 {
         //   printDictionary();
     }
 
-    //----------------------------------------------------------------------------  
+    //---------------------------------------------------------------------------------- 
     // processes a single line from a file, extracts words, and updates the index
     public int indexOneLine(String line, int fileId) {
         int processedWordsInLine = 0;    // Counter for words in this line
