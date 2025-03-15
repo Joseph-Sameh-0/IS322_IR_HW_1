@@ -91,15 +91,17 @@ public class Index5 {
     }
 
     //----------------------------------------------------------------------------  
+    // processes a single line from a file, extracts words, and updates the index
     public int indexOneLine(String line, int fileId) {
-        int processedWordsInLine = 0;
+        int processedWordsInLine = 0;    // Counter for words in this line
 
+        // Split the line into words
         String[] words = line.split("\\W+");
         //   String[] words = line.replaceAll("(?:[^a-zA-Z0-9 -]|(?<=\\w)-(?!\\S))", " ").toLowerCase().split("\\s+");
-        processedWordsInLine += words.length;
+        processedWordsInLine += words.length;  // Count words in this line
         for (String word : words) {
-            word = word.toLowerCase();
-            if (stopWord(word)) {
+            word = word.toLowerCase();     // Convert word to lowercase
+            if (stopWord(word)) {          // Skip stop words
                 continue;
             }
             word = stemWord(word);
@@ -110,6 +112,7 @@ public class Index5 {
             }
             // add document id to the posting list
             PostingDict wordPostingDict = index.get(word);
+            
             if (!wordPostingDict.postingListContains(fileId)) {
                 wordPostingDict.doc_freq += 1; //set doc freq to the number of doc that contain the term
                 if (wordPostingDict.pList == null) {
@@ -120,12 +123,12 @@ public class Index5 {
                     wordPostingDict.last = wordPostingDict.last.next;
                 }
             } else {
-                wordPostingDict.last.dtf += 1;
+                wordPostingDict.last.dtf += 1;     // increase term frequency in this document
             }
             //set the term_fteq in the collection
             wordPostingDict.term_freq += 1;
+            
             if (word.equalsIgnoreCase("lattice")) {
-
                 System.out.println("  <<" + wordPostingDict.getPosting(1) + ">> " + line);
             }
 
