@@ -7,11 +7,11 @@ This project implements an **inverted index** in Java, which is a data structure
 
 ## **Features**
 
-  -Builds an inverted index from a set of text files.
+  - Builds an inverted index from a set of text files.
   
-  -Stores the index in a serialized format for quick loading.
+  - Stores the index in a serialized format for quick loading.
   
-  -Allows querying the index to find documents containing a specific word.
+  - Allows querying the index to find documents containing a specific word.
 
 
 
