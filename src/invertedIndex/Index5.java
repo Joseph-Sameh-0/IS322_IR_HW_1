@@ -110,7 +110,7 @@ public class Index5 {
             if (!index.containsKey(word)) {
                 index.put(word, new PostingDict());
             }
-            // add document id to the posting list
+             // Retrieve the posting dictionary for the word
             PostingDict wordPostingDict = index.get(word);
             // if this word hasn't appeared in this file before, add it to the posting list.
             if (!wordPostingDict.postingListContains(fileId)) {
