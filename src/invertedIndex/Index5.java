@@ -224,11 +224,11 @@ public class Index5 {
     }
 
 
-    //---------------------------------
+    //-----------------------------------------------------------------------------------------------
     String[] sort(String[] words) {  //bubble sort
         boolean sorted = false;
         String sTmp;
-        //-------------------------------------------------------
+    //------------------------------------------------------------------------------------------------
         while (!sorted) { // while the array is not sorted
             sorted = true; // assume the array is sorted
             for (int i = 0; i < words.length - 1; i++) { // loop through the array
@@ -244,10 +244,12 @@ public class Index5 {
         return words;
     }
 
-    //---------------------------------
-
+    //--------------------------------------------------------------------------------------------------------------------------
+//This method saves (stores) an index into a file for later retrieval.
+// It writes both source records and index records to a file in a structured format.
     public void store(String storageName) {
         try {
+            // Define the file path where the index will be stored
             String pathToStorage = "index/" + storageName;
             Writer wr = new FileWriter(pathToStorage);
 
@@ -269,7 +271,7 @@ public class Index5 {
                 Map.Entry<String, PostingDict> pair = it.next();
                 PostingDict dd = pair.getValue();
                 //  System.out.print("** [" + pair.getKey() + "," + dd.doc_freq + "] <" + dd.term_freq + "> =--> ");
-                wr.write(pair.getKey().toString() + "," + dd.doc_freq + "," + dd.term_freq + ";"); //term, doc freq, term freq
+                wr.write(pair.getKey().toString() + "," + dd.doc_freq + "," + dd.term_freq + ";");// Write term, document frequency, and term frequency
                 Posting p = dd.pList;
                 while (p != null) {
                     //    System.out.print( p.docId + "," + p.dtf + ":");
