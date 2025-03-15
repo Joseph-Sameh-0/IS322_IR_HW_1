@@ -19,7 +19,6 @@ import java.util.Map;
  */
 public class Index5 {
 
-    //--------------------------------------------
     int N = 0;              //total number of documents.
     public Map<Integer, SourceRecord> sources;  // store the doc_id and the file name.
 
