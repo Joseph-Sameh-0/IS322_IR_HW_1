@@ -44,9 +44,9 @@ public class Index5 {
             if (p.next != null) {
                 System.out.print(p.docId + ",");
             } else {
-                System.out.print(p.docId);
+                System.out.print(p.docId);    // Last element (no trailing comma)
             }
-            p = p.next;
+            p = p.next;                       // Move to the next posting
         }
         System.out.println("]");
     }
