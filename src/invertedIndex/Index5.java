@@ -65,7 +65,7 @@ public class Index5 {
     }
 
     //-----------------------------------------------
-    //Reads a set of files, processes the content line by line,calls indexOneLine fun to process the line
+    //Reads a set of files, processes the content line by line,calls indexOneLine function to process the line
     public void buildIndex(String[] files) {  // from disk not from the internet
         int fileId = 0;                     //  Unique ID for each file (starting from 0)
         // Loop through each file name in the list
