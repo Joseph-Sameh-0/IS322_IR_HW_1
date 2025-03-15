@@ -112,7 +112,7 @@ public class Index5 {
             }
             // add document id to the posting list
             PostingDict wordPostingDict = index.get(word);
-            
+            // if this word hasn't appeared in this file before, add it to the posting list.
             if (!wordPostingDict.postingListContains(fileId)) {
                 wordPostingDict.doc_freq += 1; //set doc freq to the number of doc that contain the term
                 if (wordPostingDict.pList == null) {
@@ -133,7 +133,7 @@ public class Index5 {
             }
 
         }
-        return processedWordsInLine;
+        return processedWordsInLine;  // return the number of words processed in this line
     }
 
     //----------------------------------------------------------------------------
