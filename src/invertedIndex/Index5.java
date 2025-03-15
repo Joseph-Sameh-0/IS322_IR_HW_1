@@ -316,48 +316,52 @@ public class Index5 {
     //load index from hard disk into memory
     public HashMap<String, PostingDict> load(String storageName) {
         try {
-            String pathToStorage = "/home/ehab/tmp11/rl/" + storageName;
-            sources = new HashMap<Integer, SourceRecord>();
-            index = new HashMap<String, PostingDict>();
-            BufferedReader file = new BufferedReader(new FileReader(pathToStorage));
+            String pathToStorage = "/home/ehab/tmp11/rl/" + storageName; // select the right path to load from
+            sources = new HashMap<Integer, SourceRecord>(); // to store sourceRecord instances
+            index = new HashMap<String, PostingDict>(); // to store postingDict instances
+            BufferedReader file = new BufferedReader(new FileReader(pathToStorage)); // to read from the specified file path
             String ln = "";
             int flen = 0;
-            while ((ln = file.readLine()) != null) {
-                if (ln.equalsIgnoreCase("section2")) {
+            while ((ln = file.readLine()) != null) { // start reading the file and as long as EOF hasn't been reached
+                if (ln.equalsIgnoreCase("section2")) { // reads lines until it encounters "section2"
                     break;
                 }
-                String[] ss = ln.split(",");
-                int fid = Integer.parseInt(ss[0]);
+                String[] ss = ln.split(","); // split each line by commas
+                int fid = Integer.parseInt(ss[0]); // casts the first string in the array as an int
                 try {
+                    // prints the fid integer along with the other strings in the array according to a specific format
                     System.out.println("**>>" + fid + " " + ss[1] + " " + ss[2].replace('~', ',') + " " + ss[3] + " [" + ss[4] + "]   " + ss[5].replace('~', ','));
-
+                    // creates a sourceRecord object
                     SourceRecord sr = new SourceRecord(fid, ss[1], ss[2].replace('~', ','), Integer.parseInt(ss[3]), Double.parseDouble(ss[4]), ss[5].replace('~', ','));
-                    //   System.out.println("**>>"+fid+" "+ ss[1]+" "+ ss[2]+" "+ ss[3]+" ["+ Double.parseDouble(ss[4])+ "]  \n"+ ss[5]);
-                    sources.put(fid, sr);
+                    //   System.out.println("**>>"+fid+" "+ ss[1]+" "+ ss[2]+" "+ ss[3]+" ["+ Double.parseDouble(ss[4])+ "]  \n"+ ss[5])
+                    sources.put(fid, sr); // add the sr object to the sources map and link it with the fid
                 } catch (Exception e) {
-
+                    // in case of an error happened while casting the string as an int
                     System.out.println(fid + "  ERROR  " + e.getMessage());
                     e.printStackTrace();
                 }
             }
-            while ((ln = file.readLine()) != null) {
+            while ((ln = file.readLine()) != null) { // continues reading until EOF
                 //     System.out.println(ln);
-                if (ln.equalsIgnoreCase("end")) {
+                if (ln.equalsIgnoreCase("end")) { // continues reading until it finds "end"
                     break;
                 }
-                String[] ss1 = ln.split(";");
-                String[] ss1a = ss1[0].split(",");
-                String[] ss1b = ss1[1].split(":");
+                String[] ss1 = ln.split(";"); // splits each line read by ;
+                String[] ss1a = ss1[0].split(","); // splits the first element of the ss1 array by comma
+                String[] ss1b = ss1[1].split(":"); // splits the second element of the ss1 array by :
+                // creates a postingDict object, links it with the first string in ss1a and add them to the index map
                 index.put(ss1a[0], new PostingDict(Integer.parseInt(ss1a[1]), Integer.parseInt(ss1a[2])));
                 String[] ss1bx;   //posting
-                for (int i = 0; i < ss1b.length; i++) {
-                    ss1bx = ss1b[i].split(",");
-                    if (index.get(ss1a[0]).pList == null) {
+                for (int i = 0; i < ss1b.length; i++) { // iterate over ss1b array
+                    ss1bx = ss1b[i].split(","); // split each element by commas and put the result array in ss1bx
+                    if (index.get(ss1a[0]).pList == null) { // checks if the pList of the postingDict corresponding to the key ss1a[0] is null
+                        // creates a new Posting object using elements in ss1bx (assumed to be integers)
                         index.get(ss1a[0]).pList = new Posting(Integer.parseInt(ss1bx[0]), Integer.parseInt(ss1bx[1]));
-                        index.get(ss1a[0]).last = index.get(ss1a[0]).pList;
-                    } else {
+                        index.get(ss1a[0]).last = index.get(ss1a[0]).pList; // last points to this new posting (pList)
+                    } else { // if pList in not null
+                        // create a new posting and link it to the existing list
                         index.get(ss1a[0]).last.next = new Posting(Integer.parseInt(ss1bx[0]), Integer.parseInt(ss1bx[1]));
-                        index.get(ss1a[0]).last = index.get(ss1a[0]).last.next;
+                        index.get(ss1a[0]).last = index.get(ss1a[0]).last.next; // update last pointer to the newly created posting
                     }
                 }
             }
@@ -366,7 +370,7 @@ public class Index5 {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return index;
+        return index; // returns the index map that has mapping between string and postingDict
     }
 }
 
