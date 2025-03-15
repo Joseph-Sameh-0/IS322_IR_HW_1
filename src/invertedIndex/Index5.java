@@ -149,39 +149,38 @@ public class Index5 {
 //        return s.toString();
     }
 
-    //----------------------------------------------------------------------------  
+    //----------------------------------------------------------------------------
     Posting intersect(Posting pL1, Posting pL2) {
- Posting answer = null;
-        Posting last = null;
-        while(pL1!=null && pL2!=null )
-        {
-            if(pL1.docId==pL2.docId)
-            {
-                    Posting newNode = new Posting(pL1.docId) ;
-                    if(answer==null)
-                    {
-                        answer=newNode;
-                        last=answer;
-                    }
-                    else{
-                        last.next=newNode;
-                        last=newNode;
-                     }
-              pL1=pL1.next;
-              pL2=pL2.next;
-            }
-            else if(pL1.docId<pL2.docId){    
-
-                 pL1=pL1.next;
-            } 
-            else{
-                pL2=pL2.next;
+        Posting answer = null; // the final answer
+        Posting last = null; // the last node in the answer list
+        while (pL1 != null && pL2 != null) {
+            if (pL1.docId == pL2.docId) {
+                // if the two posting lists have the same doc id,
+                // add the doc id to the answer list
+                Posting newNode = new Posting(pL1.docId);
+                if (answer == null) {
+                    // if this is the first node in the answer list
+                    answer = newNode;
+                    last = answer;
+                } else {
+                    // add the new node to the end of the answer list
+                    last.next = newNode;
+                    last = newNode;
+                }
+                pL1 = pL1.next; // move to the next doc in the first list
+                pL2 = pL2.next; // move to the next doc in the second list
+            } else if (pL1.docId < pL2.docId) {
+                // if the doc id in the first list is smaller, move to the next doc in the first list
+                pL1 = pL1.next;
+            } else {
+                // if the doc id in the second list is smaller, move to the next doc in the second list
+                pL2 = pL2.next;
             }
         }
         return answer;
     }
 
-    public String find_24_01(String phrase) { // any mumber of terms non-optimized search 
+    public String find_24_01(String phrase) { // any mumber of terms non-optimized search
         String result = "";
         String[] words = phrase.split("\\W+");
         int len = words.length;
@@ -194,15 +193,21 @@ public class Index5 {
             }
         }
 
-        //fix this if word is not in the hash table will crash...
+        // Start with the posting list of the first word
         Posting posting = index.get(words[0].toLowerCase()).pList;
+
+        // Intersect the posting lists of the remaining words
         int i = 1;
         while (i < len) {
+            // Intersect the current posting list with the posting list of the next word
             posting = intersect(posting, index.get(words[i].toLowerCase()).pList);
             i++;
         }
+
+        // Print out the results
         while (posting != null) {
             //System.out.println("\t" + sources.get(num));
+            // Print out the document ID, title and length of the document
             result += "\t" + posting.docId + " - " + sources.get(posting.docId).title + " - " + sources.get(posting.docId).length + "\n";
             posting = posting.next;
         }
@@ -215,15 +220,15 @@ public class Index5 {
         boolean sorted = false;
         String sTmp;
         //-------------------------------------------------------
-        while (!sorted) {
-            sorted = true;
-            for (int i = 0; i < words.length - 1; i++) {
+        while (!sorted) { // while the array is not sorted
+            sorted = true; // assume the array is sorted
+            for (int i = 0; i < words.length - 1; i++) { // loop through the array
                 int compare = words[i].compareTo(words[i + 1]);
-                if (compare > 0) {
-                    sTmp = words[i];
+                if (compare > 0) { // if the current element is larger than the next element
+                    sTmp = words[i]; // swap the two elements
                     words[i] = words[i + 1];
                     words[i + 1] = sTmp;
-                    sorted = false;
+                    sorted = false; // the array is not sorted
                 }
             }
         }
@@ -236,27 +241,30 @@ public class Index5 {
         try {
             String pathToStorage = "index/" + storageName;
             Writer wr = new FileWriter(pathToStorage);
+
+            // write the source records
             for (Map.Entry<Integer, SourceRecord> entry : sources.entrySet()) {
                 System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue().URL + ", Value = " + entry.getValue().title + ", Value = " + entry.getValue().text);
-                wr.write(entry.getKey().toString() + ",");
-                wr.write(entry.getValue().URL.toString() + ",");
-                wr.write(entry.getValue().title.replace(',', '~') + ",");
-                wr.write(entry.getValue().length + ","); //String formattedDouble = String.format("%.2f", fee );
-                wr.write(String.format("%4.4f", entry.getValue().norm) + ",");
-                wr.write(entry.getValue().text.toString().replace(',', '~') + "\n");
+                wr.write(entry.getKey().toString() + ","); //doc id
+                wr.write(entry.getValue().URL.toString() + ","); //url
+                wr.write(entry.getValue().title.replace(',', '~') + ","); //title
+                wr.write(entry.getValue().length + ","); //length of the text
+                wr.write(String.format("%4.4f", entry.getValue().norm) + ","); //norm of the text
+                wr.write(entry.getValue().text.toString().replace(',', '~') + "\n"); //text
             }
             wr.write("section2" + "\n");
 
-            Iterator it = index.entrySet().iterator();
+            // write the index records
+            Iterator<Map.Entry<String, PostingDict>> it = index.entrySet().iterator();
             while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry) it.next();
-                PostingDict dd = (PostingDict) pair.getValue();
+                Map.Entry<String, PostingDict> pair = it.next();
+                PostingDict dd = pair.getValue();
                 //  System.out.print("** [" + pair.getKey() + "," + dd.doc_freq + "] <" + dd.term_freq + "> =--> ");
-                wr.write(pair.getKey().toString() + "," + dd.doc_freq + "," + dd.term_freq + ";");
+                wr.write(pair.getKey().toString() + "," + dd.doc_freq + "," + dd.term_freq + ";"); //term, doc freq, term freq
                 Posting p = dd.pList;
                 while (p != null) {
                     //    System.out.print( p.docId + "," + p.dtf + ":");
-                    wr.write(p.docId + "," + p.dtf + ":");
+                    wr.write(p.docId + "," + p.dtf + ":"); //doc id, term freq in the doc
                     p = p.next;
                 }
                 wr.write("\n");
