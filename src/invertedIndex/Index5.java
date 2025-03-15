@@ -272,7 +272,7 @@ public class Index5 {
                 PostingDict dd = pair.getValue();
                 //  System.out.print("** [" + pair.getKey() + "," + dd.doc_freq + "] <" + dd.term_freq + "> =--> ");
                 wr.write(pair.getKey().toString() + "," + dd.doc_freq + "," + dd.term_freq + ";");// Write term, document frequency, and term frequency
-                Posting p = dd.pList;
+                Posting p = dd.pList;// Write posting list (linked list of documents containing the term)
                 while (p != null) {
                     //    System.out.print( p.docId + "," + p.dtf + ":");
                     wr.write(p.docId + "," + p.dtf + ":"); //doc id, term freq in the doc
@@ -285,11 +285,11 @@ public class Index5 {
             System.out.println("=============EBD STORE=============");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace();// Print any error that occurs during file writing
         }
     }
 
-    //=========================================
+    //---------------------------------------------------------------------------------------------
     public boolean storageFileExists(String storageName) {
         java.io.File f = new java.io.File("/home/ehab/tmp11/rl/" + storageName);
         if (f.exists() && !f.isDirectory())
@@ -298,7 +298,7 @@ public class Index5 {
 
     }
 
-    //----------------------------------------------------
+    //-----------------------------------------------------------------------------------------------
     public void createStore(String storageName) {
         try {
             String pathToStorage = "/home/ehab/tmp11/" + storageName;
@@ -369,4 +369,3 @@ public class Index5 {
     }
 }
 
-//=====================================================================
