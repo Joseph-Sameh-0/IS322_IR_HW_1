@@ -291,8 +291,12 @@ public class Index5 {
     }
 
     //---------------------------------------------------------------------------------------------
+    
+    // checks if a file with the given storageName exists in the specified directory
     public boolean storageFileExists(String storageName) {
+         // Create a file object representing the file in the specified directory
         java.io.File f = new java.io.File("/home/ehab/tmp11/rl/" + storageName);
+        // Check if the file exists and is not a directory
         if (f.exists() && !f.isDirectory())
             return true;
         return false;
@@ -300,14 +304,22 @@ public class Index5 {
     }
 
     //-----------------------------------------------------------------------------------------------
+
+    // creates a new file with the given storageName inside the directory "/home/ehab/tmp11/"
     public void createStore(String storageName) {
         try {
+            
+            // construct the full path to the storage file
             String pathToStorage = "/home/ehab/tmp11/" + storageName;
+            
+            // create a FileWriter to write to the specified file
             Writer wr = new FileWriter(pathToStorage);
+            
             wr.write("end" + "\n");
             wr.close();
 
         } catch (Exception e) {
+            // print stack trace if an error occur
             e.printStackTrace();
         }
     }
