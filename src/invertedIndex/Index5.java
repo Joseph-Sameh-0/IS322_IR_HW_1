@@ -5,6 +5,7 @@
 package invertedIndex;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.Writer;
@@ -57,7 +58,7 @@ public class Index5 {
         while (idxIt.hasNext()) {
             Map.Entry<String, PostingDict> IdxPair = idxIt.next();                     // Get the next key-value pair from the map
             PostingDict postingDict = IdxPair.getValue();                              // Extract the PostingDict object (value) from the key-value pair.
-            System.out.print("** [" + IdxPair.getKey() + "," + postingDict.doc_freq + "]       =--> ");   // Print the term (key) and its document frequency in a formatted way.
+            // System.out.print("** [" + IdxPair.getKey() + "," + postingDict.doc_freq + "]       =--> ");   // Print the term (key) and its document frequency in a formatted way.
             System.out.printf("** %-15s %-5d =--> ", IdxPair.getKey(), postingDict.doc_freq);
             printPostingList(postingDict.pList);                                       // Call a function to print the posting list of the current term.
         }
@@ -252,6 +253,17 @@ public class Index5 {
         try {
             // Define the file path where the index will be stored
             String pathToStorage = "index/" + storageName;
+
+            File directory = new File("index");
+            if (!directory.exists()) {
+                if (directory.mkdirs()) {
+                    System.out.println("Directory 'index' created successfully.");
+                } else {
+                    System.err.println("Failed to create directory 'index'.");
+                    return; // Stop if directory creation fails
+                }
+            }
+
             Writer wr = new FileWriter(pathToStorage);
 
             // write the source records
